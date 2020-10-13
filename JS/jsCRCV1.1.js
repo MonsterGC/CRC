@@ -54,7 +54,7 @@ var test = function (R) {
     return 1
 }
 
-var str = "你今天真帅喔"
+var str = "你今天真帅喔！    ！！！！！吵到你长度案件发昆仑山附近的拉升刻录机埃里克森大立科技爱尚客建档立卡建设路口发几个阿喀琉斯到家啦是教大家流口水的骄傲是看得见离开啊圣诞快乐进阿里开始的加了看似简单拉克丝多久啊索拉卡绝对路径卡死机大昆仑山的架势叫大佬开始的家卡罗计算发离开家发的空间阿斯加德卡了手动垃圾啊十六空间的阿喀琉斯大立科技啊圣诞节啊设定了看结束了大立科技撒大声地啊是的啊s///..;';pp;;l;l;ll';pp.,sadkklgal'';;;88*&^%@&$*(%(#*"
 // 发送端求余数
 var M = utils.charToAscii(utils.toEncode(str))
 console.log(M)
@@ -75,8 +75,10 @@ R = auth(M, P)
 console.log(`检验出来的余数${R}`)
 var status = test(R)
 console.log(`检验${status ? "成功" : "出错"}`)
-var testM = M.slice(0, M.length - P.length + 1)
-console.log(`原文本是:${utils.toDecode(utils.asciiToChar(testM))}`)
+var testM = utils.toDecode(utils.asciiToChar(M.slice(0, M.length - P.length + 1)))
+console.log(`原文本是:${testM}`)
+console.log(`初文本是:${str}`)
+console.log(`是否相等?${str === testM}`)
 
 
 // 发送过程中错误检测
