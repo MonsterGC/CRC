@@ -6,10 +6,11 @@
  */
 #include <iostream>
 #include <iomanip>
-#include <fstream>
 #include <cstring>
 #include <string>
 #include "crc.h"
+#include "loadfile.h"
+#include "stdlib.h"
 using namespace std;
 
 int main(int argc, char *argv[])
@@ -25,36 +26,12 @@ int main(int argc, char *argv[])
         cout << "Please enter the input file name:";
         cin >> filename;
     }
-    ifstream fin;
-    fin.open(filename.c_str());
-    
-    // 读取数据
-    string str;
-    vector<string> mid;
-    while (getline(fin, str))
+    // 读取文件
+    loadfile str_vec(filename);
+    vector<string> mid = str_vec.readfileline();
+    for (vector<string>::iterator it = mid.begin(); it != mid.end(); ++it)
     {
-        mid.push_back(str);
+        cout << *it << endl;
     }
-    cout<<"读出的文件是:"<<endl;
-    for(int i = 0; i < mid.size(); ++i) {
-        cout<<mid[i]<<endl;
-    }
-    if (!fin.is_open())
-    {
-        cerr << "err: connot open file:" << filename << endl;
-        cerr << "Please check the path and file name is true." << endl;
-        return 0;
-    }
-    ofstream fout;
-    if (argc > 2)
-    {
-        fout.open(argv[2]);
-    }
-    else
-    {
-        fout.open("output.txt");
-    }
-    fout.close();
-    fin.close();
     return 0;
 }

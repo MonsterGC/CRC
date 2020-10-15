@@ -4,7 +4,9 @@
 #
 
 all:
-	g++ ./src/crc.cpp -o ./src/crc
+	g++ ./src/crc.cpp -o ./src/bin/crc
 
+loadfile:
+	g++ ./src/loadfile.cpp -o ./src/bin/loadfile
 # vim:ft=make
 #
