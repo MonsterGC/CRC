@@ -1,0 +1,7 @@
+input.txt
+
+:Author: root
+:Email: root@tw.com
+:Date: 2020-10-15 09:06
+
+大家好！我是帅哥！
