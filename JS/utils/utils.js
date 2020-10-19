@@ -1,3 +1,5 @@
+const { rejects } = require('assert')
+const fs = require('fs')
 var mid = {
     ' ': '00100000', '!': '00100001', '\"': '00100010', '#': '00100011',
     '$': '00100011', '%': '00100101', '&': '00100110', '\'': '00100111',
@@ -72,4 +74,88 @@ exports.toEncode = function (str) {
  */
 exports.toDecode = function (str) {
     return decodeURI(str)
+}
+
+/**
+ * 检验余数
+ * @param {*} R 
+ */
+exports.test = function (R) {
+    for (var i = 0; i < R.length; ++i) {
+        if (R[i] != '0') return 0
+    }
+    return 1
+}
+
+/**
+ * 求余数
+ * @param {*} M 被除数
+ * @param {*} P 除数
+ */
+exports.auth = function (M, P) {
+    var R = P
+    var dist = 0
+    // 跳过前面的 0
+    for (let i = 0; i < M.length; ++i) {
+        if (M[i] != '0') {
+            dist = i
+            break
+        }
+    }
+
+    console.log(`dist:${dist}`)
+    var status = 0
+    while (dist <= M.length - P.length) {
+        var tmp = []
+        if (R.length != P.length) {
+            R += M[dist + P.length - 1]
+        }
+        // console.log(R)
+        if (R[0] == '0') {
+            tmp = R.split("")
+            delete tmp[0]
+            R = tmp.join("")
+            ++dist
+            continue
+        }
+        for (var i = 0; i < P.length; ++i) {
+            if (status < 4) {
+                status++
+                tmp.push(R[i] ^ M[dist + i])
+            } else {
+                tmp.push(R[i] ^ P[i])
+            }
+        }
+        delete tmp[0]
+        R = tmp.join("")
+        ++dist
+    }
+    return R
+}
+
+/**
+ * 读取文件
+ * @param {*} dir 
+ */
+exports.readFile = function (dir) {
+    return new Promise((resolve, rejects) => {
+        fs.readFile(dir, 'utf-8', (err, data) => {
+            if (err) rejects(err)
+            resolve(data)
+        })
+    })
+}
+
+/**
+ * 保存文件
+ * @param {*} str 
+ */
+exports.writeFile = function (str, filename) {
+    const data = new Uint8Array(Buffer.from(str));
+    return new Promise((resolve, rejects) => {
+        fs.writeFile(filename, data, (err) => {
+            if (err) rejects(err);
+            console.log('The file has been saved!');
+        });
+    })
 }
